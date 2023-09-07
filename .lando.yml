@@ -1,0 +1,8 @@
+name: php-framework
+recipe: lemp
+config:
+  php: '8.2'
+  composer_version: '2.6.2'
+  webroot: public
+  database: mysql:5.7
+  xdebug: true
