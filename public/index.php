@@ -1,3 +1,3 @@
 <?php
 
-echo '<h1>Hello, World!</h1>';
+require_once dirname(__DIR__) . '/vendor/autoload.php';
