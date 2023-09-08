@@ -22,4 +22,29 @@ class Request
     {
         return new static($_GET, $_POST, $_COOKIE, $_FILES, $_SERVER);
     }
+
+    public function getParams(): array
+    {
+        return $this->getParams;
+    }
+
+    public function getPostData(): array
+    {
+        return $this->postData;
+    }
+
+    public function getCookies(): array
+    {
+        return $this->cookies;
+    }
+
+    public function getFiles(): array
+    {
+        return $this->files;
+    }
+
+    public function getServer(): array
+    {
+        return $this->server;
+    }
 }

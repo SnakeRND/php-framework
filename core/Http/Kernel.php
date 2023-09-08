@@ -4,14 +4,31 @@ declare(strict_types=1);
 
 namespace Framework\Core\Http;
 
-use JetBrains\PhpStorm\Pure;
+use FastRoute\RouteCollector;
+
+use function FastRoute\simpleDispatcher;
 
 class Kernel
 {
-    #[Pure] public function handle(Request $request): Response
+    public function handle(Request $request): Response
     {
-        $content = '<h1>Hello from Kernel</h1>';
+        $dispatcher = simpleDispatcher(function (RouteCollector $collector) {
+            $routes = include BASE_PATH . '/routes/web.php';
 
-        return new Response($content);
+            foreach ($routes as $route) {
+                $collector->addRoute(...$route);
+            }
+        });
+
+        $server = $request->getServer();
+
+        $routeInfo = $dispatcher->dispatch(
+            $server['REQUEST_METHOD'],
+            $server['REQUEST_URI']
+        );
+
+        [$status, $handler, $vars] = $routeInfo;
+
+        return $handler($vars);
     }
 }
